@@ -11,8 +11,10 @@ import cavasInstanceState from "./stateCanvasInstance";
 import isQuestionListOpenState from "./stateIsQuestionListOpen";
 import instructorSocketRefState from "@/stores/stateInstructorSocketRef";
 import stickyNoteEditPanelVisibilityState from "./stateStickyNoteEditPanelVisible";
+import useAuth from "@/hooks/useAuth";
 
 const CanvasSection = () => {
+  const { checkAuth } = useAuth();
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const setCanvas = useSetRecoilState(cavasInstanceState);
   const socket = useRecoilValue(instructorSocketRefState);
@@ -23,6 +25,7 @@ const CanvasSection = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    checkAuth();
     if (!socket) return;
     socket.on("asked", (data) => {
       setQuestions([data.content, ...questions]);
