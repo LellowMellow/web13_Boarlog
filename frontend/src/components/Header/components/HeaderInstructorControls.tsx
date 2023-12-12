@@ -56,8 +56,6 @@ const HeaderInstructorControls = ({ setLectureCode }: HeaderInstructorControlsPr
   const prevInputMicVolumeRef = useRef<number>(0);
 
   const roomid = new URLSearchParams(useLocation().search).get("roomid") || "999999";
-  const sampleAccessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBsYXRpbm91c3NAZ21haWwuY29tIiwiaWF0IjoxNzAxNjY0NTc4LCJleHAiOjE3MDI3MDEzNzh9.e2ikfmTsFCoVNxenHpAh__hLhoJnUPWSf-FmFSPo_RA";
   const pc_config = {
     iceServers: [
       {
@@ -137,7 +135,7 @@ const HeaderInstructorControls = ({ setLectureCode }: HeaderInstructorControlsPr
       managerRef.current = new Manager(import.meta.env.VITE_MEDIA_SERVER_URL);
       socketRef.current = managerRef.current.socket("/create-room", {
         auth: {
-          accessToken: sampleAccessToken,
+          accessToken: localStorage.getItem("token"),
           refreshToken: "sample"
         }
       });
@@ -327,7 +325,7 @@ const HeaderInstructorControls = ({ setLectureCode }: HeaderInstructorControlsPr
     if (!managerRef.current) return;
     lectureSocketRef.current = managerRef.current.socket("/lecture", {
       auth: {
-        accessToken: sampleAccessToken,
+        accessToken: localStorage.getItem("token"),
         refreshToken: "sample"
       }
     });
